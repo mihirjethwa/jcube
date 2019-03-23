@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div id="preloader">
+<div class="south-load"></div>
+</div>
+
+
+<section class="breadcumb-area bg-img" style="background-image: url({% static 'img/bg-img/college1.jpg' %});">
+<div class="container h-100">
+<div class="row h-100 align-items-center">
+<div class="col-12">
+<div class="breadcumb-content">
+<h3 class="breadcumb-title">Recommended Colleges</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="south-search-area">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="advanced-search-form">
+
+<div class="search-title">
+<p>Search for college</p>
+</div>
+
+	<form action="{% url 'college:listing' %}" method="POST" id="advanceSearch">
+	<div class="row">
+	<div class="col-12 col-md-4 col-lg-3">
+	<div class="form-group">
+	<input type="input" class="form-control" name="name" placeholder="Keyword" value="{{ values.name }}">
+  <input type="text" name="marks" class="form-control" placeholder="Marks" value="{{ values.marks }}">
+	</div>
+	</div>
+	<div class="col-12 col-md-4 col-lg-3">
+	<div class="form-group">
+<!--
+  <div class="btn-group">
+                <select type="button" name="location" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Location <span class="caret"></span>
+                <ul class="dropdown-menu scrollable-menu" role="menu">
+                    <option value="">Location</option>
+                    {%for loc in location%}
+                  	<option value="{{loc.location}}"
+                      {% if loc == values.location %}
+                      selected
+                      {% endif %}
+                    >{{loc.location}}</option>
+                    {%endfor%}
+                </ul>
+                </select>
+            </div>-->
+            <select name="location" class="form-control" id="catagories">
+          	<option selected="true" disabled="disabled">Select location</option>
+            {%for loc in location%}
+            <option value="{{loc.location}}"
+            {% if loc.location == values.location %}
+            selected
+            {% endif %}
+            >{{loc.location}}</option>
+            {%endfor%}
+
+          	</select>
+            <!--<option value="Mumbai">mum</option>
+            <option value="Pune">pune</option>
+            <option value="3">ST</option>
+            <option value="4">OBC</option>-->
+
+
+	</div>
+	</div>
+	<div class="col-12 col-md-4 col-lg-3">
+	 <div class="form-group">
+	<select name="caste" class="form-control" id="catagories">
+	<option selected="true" disabled="disabled">Select Caste</option>
+  {%for cas in caste%}
+  <option value="{{cas.caste}}"
+  {% if cas.caste == values.caste %}
+  selected
+  {% endif %}
+  >{{cas.caste}}</option>
+  {%endfor%}
+	</select>
+  <select name="field" class="form-control" id="catagories">
+  <option selected="true" disabled="disabled">Engineering Field</option>
+  {%for fie in field%}
+	<option value="{{fie.field_name}}"
+  {% if fie.field_name == values.field %}
+  selected
+  {% endif %}
+  >{{fie.field_name}}</option>
+  {%endfor%}
+	</div>
+	</div>
+<!--
+	<div class="col-12 col-md-4 col-xl-3">
+	<div class="form-group">
+	<select class="form-control" id="listings">
+	<option>Fees</option>
+	<option>Below 3 Lakhs</option>
+	<option>Below 4 Lakhs</option>
+	<option>Below 5 Lakhs</option>
+	<option>Below 6 Lakhs</option>
+	<option>Below 10 Lakhs</option>
+	</select>
+	</div>
+	</div>-->
+
+
+	<div class="col-12 col-md-8 col-lg-12 col-xl-5 d-flex">
+
+<!--	<div class="slider-range">
+	<div data-min="0" data-max="360" data-unit=" marks" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="360">
+	<div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	</div>
+	<div class="range">JEE: 0 marks - 360 marks</div>
+	</div>
+-->
+	<div class="slider-range">
+	<div data-min="0" data-max="200" data-unit=" marks" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="200">
+	<div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	</div>
+	<div class="range">CET: 0 marks - 200 marks</div>
+	</div>
+	</div>
+
+	<div class="col-12 d-flex justify-content-between align-items-end">
+
+
+
+	<div class="form-group mb-0">
+  {% csrf_token %}
+	<button type="submit" class="btn south-btn">Search</button>
+	</div>
+	</div>
+	</div>
+	</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<section class="listings-content-wrapper section-padding-100">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="listings-top-meta d-flex justify-content-between mb-100">
+<div class="view-area d-flex align-items-center">
+
+<span>View as:</span>
+<div class="grid_view ml-15"><a href="#" class="active"><i class="fa fa-th" aria-hidden="true"></i></a></div>
+<div class="list_view ml-15"><a href="#"><i class="fa fa-th-list" aria-hidden="true"></i></a></div>
+</div>
+<div class="order-by-area d-flex align-items-center">
+<span class="mr-15">Order by:</span>
+<select>
+<option selected>Default</option>
+
+<option value="3">Ratings</option>
+
+</select>
+</div>
+</div>
+</div>
+</div>
+{% if colleges %}
+	{{ colleges.count }}
+	<span> colleges recommended for you. (results)</span>
+{% else %}
+<p>0 colleges found</p>
+{% endif %}
+<div class="row">
+<!-- colleges -->
+{% if colleges %}
+  {% for college in colleges %}
+  <div class="col-12 col-md-6 col-xl-4">
+  <div class="single-featured-property mb-50">
+
+  <div class="property-thumb">
+  <img src="{{ college.picsrc }}" alt="">
+  </div>
+
+  <div class="property-content">
+  <h5><a href="{{ college.c_id }}">{{ college.c }}</a></h5>
+  <p class="location"><img src="img/icons/location.png" alt="">{{ college.location_map }}</p>
+
+  <div class="property-meta-data d-flex align-items-end justify-content-between">
+
+
+  <div class="garage">
+  <span><b>Field: {{ college.f }}</b></span>
+  </div>
+  <div class="space">
+  <span><b>Marks: {{college.marks }}</b></span>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  {% endfor %}
+
+{% else %}
+<div class="">
+  <p>empty database</p>
+</div>
+
+{% endif %}
+
+<div class="row">
+<!--<div class="col-12">
+<div class="south-pagination d-flex justify-content-end">
+<nav aria-label="Page navigation">
+<ul class="pagination">
+<li class="page-item"><a class="page-link active" href="#">01</a></li>
+<li class="page-item"><a class="page-link" href="#">02</a></li>
+<li class="page-item"><a class="page-link" href="#">03</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>-->
+</div>
+</section>
+
+
+<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+
+
+<div class="copywrite-text d-flex align-items-center justify-content-center">
+<p>
+Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+
+</div>
+</footer>
+{% endblock %}

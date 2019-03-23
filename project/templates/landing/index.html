@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+  <div id="preloader">
+	<div class="south-load"></div>
+	</div>
+
+
+	<section class="hero-area">
+	<div class="hero-slides owl-carousel">
+
+	<div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/college1.jpg' %});">
+	<div class="container h-100">
+	<div class="row h-100 align-items-center">
+	<div class="col-12">
+	<div class="hero-slides-content">
+	<h2 data-animation="fadeInUp" data-delay="50ms">Find your perfect college</h2>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/college2.jpg' %});">
+	<div class="container h-100">
+	<div class="row h-100 align-items-center">
+	<div class="col-12">
+	<div class="hero-slides-content">
+	<h2 data-animation="fadeInUp" data-delay="30ms">Within Few Minutes</h2>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/college3.jpg' %});">
+	<div class="container h-100">
+	<div class="row h-100 align-items-center">
+	<div class="col-12">
+	<div class="hero-slides-content">
+	<h2 data-animation="fadeInUp" data-delay="50ms">Enter your details below</h2>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+
+
+	<div class="south-search-area">
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="advanced-search-form">
+
+	<div class="search-title">
+	<p>Search for college</p>
+	</div>
+
+	<form action="{% url 'college:listing' %}" method="POST" id="advanceSearch">
+	<div class="row">
+	<div class="col-12 col-md-4 col-lg-3">
+	<div class="form-group">
+	<input type="input" class="form-control" name="name" placeholder="Name" >
+  <input type="text" name="marks" class="form-control" placeholder="Marks">
+	</div>
+	</div>
+	<div class="col-12 col-md-4 col-lg-3">
+	<div class="form-group">
+<!--
+  <div class="btn-group">
+                <select type="button" name="location" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Location <span class="caret"></span>
+                <ul class="dropdown-menu scrollable-menu" role="menu">
+                    <option value="">Location</option>
+                    {%for loc in location%}
+                  	<option value="{{loc.location}}">{{loc.location}}</option>
+                    {%endfor%}
+                </ul>
+                </select>
+            </div>-->
+            <select name="location" class="form-control" id="catagories">
+          	<option selected="true" disabled="disabled">Select location</option>
+            {%for loc in location%}
+            <option value="{{loc.location}}"
+              {% if loc == values.location %}
+              selected
+              {% endif %}
+            >{{loc.location}}</option>
+            {%endfor%}
+
+          	</select>
+
+
+
+
+	</div>
+	</div>
+	<div class="col-12 col-md-4 col-lg-3">
+	 <div class="form-group">
+	<select name="caste" class="form-control" id="catagories">
+	<option selected="true" disabled="disabled">Select Caste</option>
+  {%for cas in caste%}
+  <option value="{{cas.caste}}">{{cas.caste}}</option>
+  {%endfor%}
+  </select>
+  <select name="field" class="form-control" id="catagories">
+  <option selected="true" disabled="disabled">Engineering Field</option>
+  {%for fie in field%}
+  <option value="{{fie.field_name}}" >{{fie.field_name}}</option>
+  {%endfor%}
+  </select>
+	</div>
+	</div>
+
+	<div class="col-12 col-md-4 col-xl-3">
+	<div class="form-group">
+	<select class="form-control" id="listings">
+	<option>Fees</option>
+	<option>Below 3 Lakhs</option>
+	<option>Below 4 Lakhs</option>
+	<option>Below 5 Lakhs</option>
+	<option>Below 6 Lakhs</option>
+	<option>Below 10 Lakhs</option>
+	</select>
+	</div>
+	</div>
+
+
+	<div class="col-12 col-md-8 col-lg-12 col-xl-5 d-flex">
+
+<!--	<div class="slider-range">
+	<div data-min="0" data-max="360" data-unit=" marks" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="360">
+	<div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	</div>
+	<div class="range">JEE: 0 marks - 360 marks</div>
+	</div>
+-->
+	<div class="slider-range">
+	<div data-min="0" data-max="200" data-unit=" marks" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="200">
+	<div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	<span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+	</div>
+	<div class="range">CET: 0 marks - 200 marks</div>
+	</div>
+	</div>
+
+	<div class="col-12 d-flex justify-content-between align-items-end">
+
+
+
+	<div class="form-group mb-0">
+  {% csrf_token %}
+	<button type="submit" class="btn south-btn">Search</button>
+	</div>
+	</div>
+	</div>
+	</form>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+
+	<section class="featured-properties-area section-padding-100-50">
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="section-heading wow fadeInUp">
+	<h2>Best Colleges</h2>
+
+	 </div>
+	</div>
+	</div>
+	<div class="row">
+  {% for feat in colleges %}
+	<div class="col-12 col-md-6 col-xl-4">
+	<div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="200ms">
+
+	<div class="property-thumb">
+	<img src="{% static 'img/bg-img/feature1.jpg' %}" alt="">
+	</div>
+
+	<div class="property-content">
+	<h5><a href="colleges/{{feat.id}}">{{feat.name}}</a></h5>
+	<p class="location"><img src="{% static 'img/icons/location.png' %}" alt="">{{feat.location}}</p>
+	<p>Placement: {{feat.placements}} Lakhs</p>
+  <p>Rating: {{feat.rating}} Stars</p>
+	<div class="property-meta-data d-flex align-items-end justify-content-between">
+	<div class="new-tag">
+	<img src="img/icons/new.png" alt="">
+	</div>
+
+	</div>
+	</div>
+	</div>
+  </div>
+
+  {%endfor%}
+	</div>
+
+	</section>
+
+
+
+
+	<section class="south-testimonials-area section-padding-100">
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="section-heading wow fadeInUp" data-wow-delay="250ms">
+	<h2>News</h2>
+	<p>Suspendisse dictum enim sit amet libero malesuada feugiat.</p>
+	</div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-12">
+	<div class="testimonials-slides owl-carousel wow fadeInUp" data-wow-delay="500ms">
+
+	<div class="single-testimonial-slide text-center">
+	<h5>News1</h5>
+	<p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
+	<div class="testimonial-author-info">
+	<img src="img/bg-img/feature6.jpg" alt="">
+	<p>Daiane Smith, <span>Thats right</span></p>
+	</div>
+	</div>
+
+	<div class="single-testimonial-slide text-center">
+	<h5>News2</h5>
+	<p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
+	<div class="testimonial-author-info">
+	<img src="img/bg-img/feature6.jpg" alt="">
+	<p>Daiane Smith, <span>Customer</span></p>
+	</div>
+	</div>
+
+	<div class="single-testimonial-slide text-center">
+	<h5>News3</h5>
+	<p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
+	<div class="testimonial-author-info">
+	<img src="img/bg-img/feature6.jpg" alt="">
+	<p>Daiane Smith, <span>Customer</span></p>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+
+
+
+
+	<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+
+<!--	<div class="main-footer-area">
+	<div class="container">
+	<div class="row">
+
+	<div class="col-12 col-sm-6 col-xl-3">
+	<div class="footer-widget-area mb-100">
+
+	<div class="widget-title">
+	<h6>About Us</h6>
+	</div>
+	<img src="img/bg-img/footer.jpg" alt="">
+	<div class="footer-logo my-4">
+	<img src="img/core-img/logo.png" alt="">
+	</div>
+	<p>Integer nec bibendum lacus. Suspen disse dictum enim sit amet libero males uada feugiat. Praesent malesuada.</p>
+	</div>
+	</div>
+
+	<div class="col-12 col-sm-6 col-xl-3">
+	<div class="footer-widget-area mb-100">
+
+	<div class="widget-title">
+	<h6>Hours</h6>
+	</div>
+
+	<div class="weekly-office-hours">
+	<ul>
+	<li class="d-flex align-items-center justify-content-between"><span>Monday - Friday</span> <span>09 AM - 19 PM</span></li>
+	<li class="d-flex align-items-center justify-content-between"><span>Saturday</span> <span>09 AM - 14 PM</span></li>
+	<li class="d-flex align-items-center justify-content-between"><span>Sunday</span> <span>Closed</span></li>
+	</ul>
+	</div>
+
+	<div class="address">
+	<h6><img src="img/icons/phone-call.png" alt=""> +45 677 8993000 223</h6>
+	<h6><img src="img/icons/envelope.png" alt=""> <a href="https://colorlib.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="345b52525d57517440515944585540511a575b59">[email&#160;protected]</a></h6>
+	<h6><img src="img/icons/location.png" alt=""> Main Str. no 45-46, b3, 56832, Los Angeles, CA</h6>
+	</div>
+	</div>
+	</div>
+
+	<div class="col-12 col-sm-6 col-xl-3">
+	<div class="footer-widget-area mb-100">
+
+	<div class="widget-title">
+	<h6>Useful Links</h6>
+	</div>
+
+	<ul class="useful-links-nav d-flex align-items-center">
+	<li><a href="#">Home</a></li>
+	<li><a href="#">About us</a></li>
+	<li><a href="#">About us</a></li>
+	<li><a href="#">Services</a></li>
+	<li><a href="#">Properties</a></li>
+	<li><a href="#">Listings</a></li>
+	<li><a href="#">Testimonials</a></li>
+	<li><a href="#">Properties</a></li>
+	<li><a href="#">Blog</a></li>
+	<li><a href="#">Testimonials</a></li>
+	<li><a href="#">Contact</a></li>
+	<li><a href="#">Elements</a></li>
+	<li><a href="#">FAQ</a></li>
+	</ul>
+	</div>
+	</div>
+
+	<div class="col-12 col-sm-6 col-xl-3">
+	<div class="footer-widget-area mb-100">
+
+	<div class="widget-title">
+	<h6>Featured Properties</h6>
+	</div>
+
+	<div class="featured-properties-slides owl-carousel">
+
+	<div class="single-featured-properties-slide">
+	<a href="#"><img src="img/bg-img/fea-product.jpg" alt=""></a>
+	</div>
+
+	<div class="single-featured-properties-slide">
+	<a href="#"><img src="img/bg-img/fea-product.jpg" alt=""></a>
+	</div>
+
+	<div class="single-featured-properties-slide">
+	<a href="#"><img src="img/bg-img/fea-product.jpg" alt=""></a>
+	 </div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div> -->
+
+	<div class="copywrite-text d-flex align-items-center justify-content-center">
+	<p>
+	Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Jatin,Jethwa,Jagda</a>
+
+	</div>
+	</footer>
+  {% endblock %}
